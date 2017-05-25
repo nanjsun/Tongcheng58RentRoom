@@ -17,12 +17,12 @@ class Tc58Spider(scrapy.Spider):
 	        	link = li.xpath('div[2]/h2/a/@href').extract()[0]
 	        	self.detailLink = link
 	        	yield scrapy.Request(url = link, callback = self.parseDetail)
-    	print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
+#    	print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
  
  # set the pages to crawl
     	if self.pageNum < 10:
     		self.pageNum += 1
-    		print('###############################')
+#    		print('###############################')
     		if len(response.xpath('//*[@id="bottom_ad_li"]/div[2]/a[12]/@href').extract()) != 0:
 	    		nextPageLink = (response.xpath('//*[@id="bottom_ad_li"]/div[2]/a[12]/@href').extract()[0])
 	    		yield scrapy.Request(url = nextPageLink, callback = self.parse)
