@@ -4,7 +4,9 @@
 #
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/spider-middleware.html
-
+import random
+import bases64
+from settings import PROXIES
 from scrapy import signals
 
 

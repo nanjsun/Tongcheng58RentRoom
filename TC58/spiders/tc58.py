@@ -5,8 +5,8 @@ from TC58.items import Tc58Item
 class Tc58Spider(scrapy.Spider):
     name = 'tc58'
     allowed_domains = ['nj.58.com']
-    start_urls = ['http://nj.58.com/jiangning/hezu/0/?PGTID=0d30000a-00b9-517a-920c-54a3803d2cf3&ClickID=4']
-
+  #  start_urls = ['http://nj.58.com/jiangning/hezu/0/?PGTID=0d30000a-00b9-517a-920c-54a3803d2cf3&ClickID=4']
+    start_urls = ['http://nj.58.com/xiaoqu/yanxiangxinyu/hezu/?PGTID=0d30000a-00b9-5f12-7982-ba55d3d5489f&ClickID=4&ib=0']
     detailLink = 'www.nj.58.com'
     pageNum = 1
 
