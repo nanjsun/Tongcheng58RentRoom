@@ -6,4 +6,4 @@ TC58/__pycache__/__init__.cpython-35.pyc
 TC58/spiders/__pycache__/__init__.cpython-35.pyc
 #.gitignore
 *.pyc
-
+.idea/
