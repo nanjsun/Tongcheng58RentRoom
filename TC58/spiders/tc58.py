@@ -2,11 +2,11 @@
 import scrapy
 from TC58.items import Tc58Item
 
+
 class Tc58Spider(scrapy.Spider):
     name = 'tc58'
     allowed_domains = ['nj.58.com']
     start_urls = ['http://nj.58.com/jiangning/hezu/0/?PGTID=0d30000a-00b9-517a-920c-54a3803d2cf3&ClickID=4']
-    # start_urls = ['http://nj.58.com/jianye/hezu/0/?PGTID=0d30000a-00b9-58ca-e32f-eab1476fa03a&ClickID=3']
 
     detailLink = 'www.nj.58.com'
     pageNum = 1
@@ -19,10 +19,10 @@ class Tc58Spider(scrapy.Spider):
                 link = li.xpath('div[2]/h2/a/@href').extract()[0]
                 count = count + 1
                 self.detailLink = link
-                yield scrapy.Request(url = link, callback = self.parseDetail)
+                yield scrapy.Request(url=link, timeout=1, callback = self.parseDetail)
 #       print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
  
- # set the pages to crawl
+# set the pages to crawl
         if self.pageNum < 10:
             self.pageNum += 1
 #           print('###############################')
