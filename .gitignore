@@ -7,3 +7,4 @@ TC58/spiders/__pycache__/__init__.cpython-35.pyc
 #.gitignore
 *.pyc
 .idea/
+ipPool.txt

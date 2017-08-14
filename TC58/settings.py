@@ -18,6 +18,9 @@ NEWSPIDER_MODULE = 'TC58.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'TC58 (+http://www.yourdomain.com)'
 
+
+
+
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 #
@@ -53,6 +56,7 @@ DOWNLOADER_MIDDLEWARES = {
     'TC58.downloadMiddleware.IPPOOLS': 125,
     'TC58.downloadMiddleware.rotateUserAgentMiddleware': 126
 }
+DOWNLOAD_TIMEOUT = 20
 
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
@@ -88,10 +92,3 @@ ITEM_PIPELINES = {
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 # set a ip poll for avoid baned
-IPPOOL = [
-    {"ipaddr" : "121.22.212.84:8118"},
-    {"ipaddr" : "58.23.123.114:8118"},
-    {"ipaddr" : "180.124.133.39:8118"},
-    {"ipaddr" : "175.42.102.252:8118"},
-    {"ipaddr" : "112.227.38.80:8118"}
-]

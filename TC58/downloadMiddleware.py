@@ -1,20 +1,30 @@
 # middleware for download
 
 import random
-from TC58.settings import IPPOOL
+import re
 from scrapy.contrib.downloadermiddleware.httpproxy import HttpProxyMiddleware
 from scrapy.contrib.downloadermiddleware.useragent import UserAgentMiddleware
+import requests
 
 
 class IPPOOLS(HttpProxyMiddleware):
     def __init__(self, ip = ''):
         self.ip = ip
+        self.availableIps = []
 
     def process_request(self, request, spider):
-        thisip = random.choice(IPPOOL)
-        print("current IP is :"+ thisip["ipaddr"])
+        with open("ipPool.txt", 'r') as f:
+            iplist = f.readlines()
+            for li in iplist:
+                if re.search(r'^[\d]{1,4}\.[\d]{1,4}\.[\d]{1,4}\.[\d]{1,4}:[\d]{1,4}', li):
+                    self.availableIps.append(re.search(r'^[\d]{1,4}\.[\d]{1,4}\.[\d]{1,4}\.[\d]{1,4}:[\d]{1,4}', li).group())
 
-        request.meta["proxy"] = "http://"+thisip['ipaddr']
+        thisip = random.choice(self.availableIps)
+
+        # if not requests.get("http://baidu.com/", proxies = {"http":"http://"+thisip["ipaddr"]}, timeout = 8):
+        print("--->current IP is :"+ thisip)
+
+        request.meta["proxy"] = "http://"+thisip
 
 
 # user agent
@@ -70,3 +80,4 @@ class rotateUserAgentMiddleware(UserAgentMiddleware):
         "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/535.24 "
         "(KHTML, like Gecko) Chrome/19.0.1055.1 Safari/535.24"
     ]
+

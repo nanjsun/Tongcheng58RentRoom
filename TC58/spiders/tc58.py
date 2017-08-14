@@ -19,28 +19,22 @@ class Tc58Spider(scrapy.Spider):
                 link = li.xpath('div[2]/h2/a/@href').extract()[0]
                 count = count + 1
                 self.detailLink = link
-                yield scrapy.Request(url=link, timeout=1, callback = self.parseDetail)
-#       print('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
- 
+                yield scrapy.Request(url=link, callback = self.parseDetail)
+
 # set the pages to crawl
         if self.pageNum < 10:
             self.pageNum += 1
-#           print('###############################')
             if len(response.xpath('//*[@id="bottom_ad_li"]/div[2]/a[12]/@href').extract()) != 0:
                 nextPageLink = (response.xpath('//*[@id="bottom_ad_li"]/div[2]/a[12]/@href').extract()[0])
                 yield scrapy.Request(url = nextPageLink, callback = self.parse)
 
     def parseDetail(self, response):
-
-        lis = response.xpath('/html/body/div[4]')
-        for li in lis:
-            item = Tc58Item()
-            item['title'] = li.xpath('div[1]/h1/text()').extract()
-            item['price'] = li.xpath('div[2]/div[2]/div[1]/div[1]/div/span[1]/b/text()').extract()
-            item['houseType'] = li.xpath('div[2]/div[2]/div[1]/div[1]/ul/li[2]/span[2]/text()').extract()
-            item['detail'] = li.xpath('div[3]/div[1]/div[1]/p/text()').extract()
-            item['method'] = li.xpath('div[2]/div[2]/div[1]/div[1]/ul/li[1]/span[2]/text()').extract()
-            item['link'] = self.detailLink
-            item['commity'] = li.xpath('div[2]/div[2]/div[1]/div[1]/ul/li[4]/span[2]/a/text()').extract()
-
-            yield item
+        item = Tc58Item()
+        item['title'] = response.xpath('/html/body/div[4]/div[1]/h1/text()').extract()
+        item['price'] = response.xpath('/html/body/div[4]/div[2]/div[2]/div[1]/div[1]/div/span[1]/b/text()').extract()
+        item['houseType'] = response.xpath('/html/body/div[4]/div[2]/div[2]/div[1]/div[1]/ul/li[2]/span[2]/text()').extract()
+        item['detail'] = response.xpath('/html/body/div[4]/div[3]/div[1]/div[1]/ul/li/span[2]/text()').extract()
+        item['method'] = response.xpath('/html/body/div[4]/div[2]/div[2]/div[1]/div[1]/ul/li[1]/span[2]/text()').extract()
+        item['link'] = self.detailLink
+        item['commity'] = response.xpath('/html/body/div[4]/div[2]/div[2]/div[1]/div[1]/ul/li[4]/span[2]/a/text()').extract()
+        return item
