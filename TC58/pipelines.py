@@ -13,14 +13,18 @@ class Tc58Pipeline(object):
     def process_item(self, item, spider):
         title = ''.join(item["title"])
         price = ''.join(item["price"])
-        houseType = ''.join(item["houseType"])
+        houseType = ''.join(item["houseType"][0].split()[0])
+        size = ''.join(item["houseType"][0].split()[1])
+        decorate = ''.join(item["houseType"][0].split()[-1])
         link = ''.join(item["link"])
         detail = ''.join(item["detail"])
         method = ''.join(item["method"])
         commity = ''.join(item["commity"])
 
 
-        sql = "INSERT INTO result(title, price, houseType, link, detail, method, commity) VALUES('"+title+"', '"+price+"', '"+houseType+"', '"+link+"', '"+detail+"', '"+method+"', '"+commity+"')"
+        sql = "INSERT INTO " \
+              "result(title, price, houseType, link, detail, method, commity, size, decorate)" \
+              " VALUES('"+title+"', '"+price+"', '"+houseType+"', '"+link+"', '"+detail+"', '"+method+"', '"+commity+"', '"+size+"', '"+decorate+"')"
         self.conn.query(sql)
         self.conn.commit()
         return item
