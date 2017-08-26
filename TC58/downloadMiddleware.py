@@ -4,13 +4,14 @@ import random
 import re
 from scrapy.contrib.downloadermiddleware.httpproxy import HttpProxyMiddleware
 from scrapy.contrib.downloadermiddleware.useragent import UserAgentMiddleware
-import requests
 
 
 class IPPOOLS(HttpProxyMiddleware):
     def __init__(self, ip = ''):
         self.ip = ip
         self.availableIps = []
+        self.currentIp = "117.78.35.194:3128"
+        self.count = 0
 
     def process_request(self, request, spider):
         with open("ipPool.txt", 'r') as f:
@@ -19,10 +20,14 @@ class IPPOOLS(HttpProxyMiddleware):
                 if re.search(r'^[\d]{1,4}\.[\d]{1,4}\.[\d]{1,4}\.[\d]{1,4}:[\d]{1,4}', li):
                     self.availableIps.append(re.search(r'^[\d]{1,4}\.[\d]{1,4}\.[\d]{1,4}\.[\d]{1,4}:[\d]{1,4}', li).group())
 
-        thisip = random.choice(self.availableIps)
+        if self.count < 100:
+            thisip = self.currentIp
+            self.count = self.count + 1
+        else:
+            thisip = random.choice(self.availableIps)
 
         # if not requests.get("http://baidu.com/", proxies = {"http":"http://"+thisip["ipaddr"]}, timeout = 8):
-        print("--->current IP is :"+ thisip)
+        print("----downloadmiddleware--->current IP is :"+ thisip)
 
         request.meta["proxy"] = "http://"+thisip
 
